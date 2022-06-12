@@ -7,15 +7,16 @@ type SutType = {
 };
 
 export const makeValidatorSut = (): IEmailValidator => {
-    return new class EmailValidatorSut implements IEmailValidator {
+    class EmailValidatorSut implements IEmailValidator {
         isValid = (email: string): boolean => true;
     }
+    return new EmailValidatorSut();
 }
 
 export const makeSut = (): SutType => {
     const validator = makeValidatorSut();
     return {
         sut: new SignUpController(validator),
-        validator: makeValidatorSut(),
+        validator: validator,
     };
 }

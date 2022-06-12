@@ -1,4 +1,4 @@
-import { IEmailValidator } from '../../../shared/validators'
+import { IEmailValidator } from '../../../shared/validators';
 import validator from 'validator';
 
 export default class EmailValidatorAdapter implements IEmailValidator {

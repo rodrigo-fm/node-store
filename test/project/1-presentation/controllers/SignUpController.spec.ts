@@ -30,7 +30,7 @@ describe('SignUpController', () => {
     test('Should return 400 and an error message if an invalid email is provided', async () => {
         // arrange
         const { sut, validator } = makeSut();
-        jest.spyOn(validator, 'isValid').mockImplementationOnce((_) => false);
+        jest.spyOn(validator, 'isValid').mockReturnValueOnce(false);
 
         // act
         const result = await sut.handle({ ...validRequest });
@@ -44,7 +44,8 @@ describe('SignUpController', () => {
     // test('Should return 500 and an error message if the email validator throws', async () => {
     //     // arrange
     //     const { sut, validator } = makeSut();
-    //     jest.spyOn(validator, 'isValid').mockImplementationOnce(await Promise.reject(new Error()));
+    //     // jest.spyOn(validator, 'isValid').mockImplementationOnce(await Promise.reject(new Error()));
+    //     // jest.spyOn(validator, 'isValid').mockRejectedValueOnce(new Error());
 
     //     // act
     //     const result = await sut.handle({ ...validRequest });

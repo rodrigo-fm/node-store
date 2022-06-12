@@ -23,7 +23,8 @@ export default class SignUpController {
                 return http400BadRequest({
                     message: `The fields "password" and "confirm password" have different values!`,
                 });
-            } else if(!this.validator.isValid(request.email)) {
+            }
+            else if(!this.validator.isValid(request.email)) {
                 return http400BadRequest({
                     message: 'The email provided is invalid',
                 });
