@@ -1,5 +1,5 @@
 import { SignUpRequest } from "../../../../src/project/1-presentation/controllers/SignUpController";
-import { http201Success, http400BadRequest } from "../../../../src/shared/helpers/HttpResponses";
+import { http201Success, http400BadRequest, http500ServerError } from "../../../../src/shared/helpers/HttpResponses";
 import { makeSut } from "./SignUpControllerMocks";
 
 describe('SignUpController', () => {
@@ -55,6 +55,18 @@ describe('SignUpController', () => {
     //         message: `The fields "password" and "confirm password" have different values!`,
     //     }))
     // });
+
+    test('Should return 500 and an error message if the account creation fails', async () => {
+        // arrange
+        const { sut, usecase } = makeSut();
+        jest.spyOn(usecase, 'handle').mockReturnValueOnce(Promise.resolve(false));
+
+        // act
+        const result = await sut.handle({ ...validRequest });
+
+        // assert
+        expect(result).toEqual(http500ServerError('Error creating account'))
+    });
 
     test('Should return 201 and a success message when a valid request body is received', async () => {
         // arrange
