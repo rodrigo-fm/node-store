@@ -12,7 +12,6 @@ export namespace IFindByEmailRepository {
     export type Return = {
         name: string;
         email: string;
-        password: string;
     };
 }
 

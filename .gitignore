@@ -1,3 +1,11 @@
 # npm configuration
 node_modules/
 package-lock.json
+
+# database configuration
+src/project/main/config/connection/connection-development.ts
+src/project/main/config/connection/connection-homologation.ts
+src/project/main/config/connection/connection-production.ts
+
+# env files
+.env

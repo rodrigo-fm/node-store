@@ -20,7 +20,6 @@ describe('AddAccountUseCase', () => {
         mockRepositoryFindByEmail(repository,{
             email: 'email@email.com',
             name: 'username',
-            password: 'password',
         });
 
         // act
