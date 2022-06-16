@@ -2,6 +2,7 @@ import { tryCatchHelper } from "../helpers";
 import { http201Success, http400BadRequest, http500ServerError, IHttpResponse } from '../../../shared/helpers/HttpResponses';
 import { IEmailValidator } from '../../../shared/validators';
 import { IAddAccountUseCase } from "../../2-domain/usecases";
+import IController from "./IController";
 
 export interface SignUpRequest {
     name: string;
@@ -11,7 +12,7 @@ export interface SignUpRequest {
     userProfileId: number;
 }
 
-export default class SignUpController {
+export default class SignUpController implements IController {
     constructor(
         private readonly validator: IEmailValidator,
         private readonly addAccountUseCase: IAddAccountUseCase

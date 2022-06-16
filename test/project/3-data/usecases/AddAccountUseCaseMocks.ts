@@ -28,8 +28,8 @@ export const makeRepositorySut = (): IAccountRepository => {
 
 export const makeEncrypterSut = (): IEncrypter => {
     class Encrypter implements IEncrypter {
-        encrypt(value: string): Promise<string> {
-            return Promise.resolve('hashed_password');
+        encrypt(value: string): string {
+            return 'hashed_password';
         }
     }
 

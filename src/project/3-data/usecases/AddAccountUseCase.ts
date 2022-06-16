@@ -18,7 +18,7 @@ export class AddAccountUseCase implements IAddAccountUseCase {
         }
 
         // hash password
-        const hashedPassword = await this.encrypter.encrypt(account.password);
+        const hashedPassword = this.encrypter.encrypt(account.password);
 
         // call repository to store the user
         const succesfulAccountCreation = await this.repository.create({...account, password: hashedPassword});

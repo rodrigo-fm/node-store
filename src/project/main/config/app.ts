@@ -1,5 +1,10 @@
 import express, { Express } from 'express';
+import { DataSource } from 'typeorm';
+import setUpRoutes from './routes';
 
-export const setupApp = async (): Promise<Express> => {
+export const setUpApp = async (datasource: DataSource): Promise<Express> => {
     const app = express();
+    setUpRoutes(app, datasource);
+
+    return app;
 }
