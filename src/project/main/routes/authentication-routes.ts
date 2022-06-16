@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { DataSource } from 'typeorm';
 import { adaptRoute } from '../adapters/express-route-adapter';
 import { makeSignUpController } from '../factories/controllers/signup-controller-factory';
