@@ -3,6 +3,7 @@ export namespace IAddAccountRepository {
         name: string;
         email: string;
         password: string;
+        userProfileId: number;
     };
 
     export type Return = boolean;

@@ -1,5 +1,6 @@
 import { AddAccountArgs } from "../../../../src/project/2-domain/usecases";
 import { IAccountRepository, IFindByEmailRepository } from "../../../../src/project/3-data/dependencies/IAccountRepository";
+import { UserProfileEnum } from "../../../../src/shared/enums/UserProfileEnum";
 import { makeSut } from "./AddAccountUseCaseMocks";
 
 describe('AddAccountUseCase', () => {
@@ -8,6 +9,7 @@ describe('AddAccountUseCase', () => {
         email: 'email@email.com',
         name: 'username',
         password: 'password',
+        userProfileId: UserProfileEnum.CONSUMER,
     };
 
     const mockRepositoryFindByEmail = (repository: IAccountRepository, mockedReturn: IFindByEmailRepository.Return | null): void => {

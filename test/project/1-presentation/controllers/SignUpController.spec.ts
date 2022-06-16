@@ -1,4 +1,5 @@
 import { SignUpRequest } from "../../../../src/project/1-presentation/controllers/SignUpController";
+import { UserProfileEnum } from "../../../../src/shared/enums/UserProfileEnum";
 import { http201Success, http400BadRequest, http500ServerError } from "../../../../src/shared/helpers/HttpResponses";
 import { makeSut } from "./SignUpControllerMocks";
 
@@ -9,6 +10,7 @@ describe('SignUpController', () => {
         email: 'email',
         password: 'password',
         confirmPassword: 'password',
+        userProfileId: UserProfileEnum.CONSUMER,
     };
 
     test('Should return 400 and an error message if password and confirmPassword fields have different values', async () => {

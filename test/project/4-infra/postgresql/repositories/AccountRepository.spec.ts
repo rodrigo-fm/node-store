@@ -1,7 +1,0 @@
-describe('create', () => {
-    
-});
-
-describe('findByEmail', () => {
-    
-});

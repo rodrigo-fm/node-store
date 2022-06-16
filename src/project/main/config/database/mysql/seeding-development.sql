@@ -20,7 +20,7 @@ USE `mydb` ;
 DROP TABLE IF EXISTS `mydb`.`user_profile` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`user_profile` (
-  `id` INT UNSIGNED NOT NULL,
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
@@ -33,13 +33,14 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`user` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`user` (
-  `id` INT UNSIGNED NOT NULL,
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_profile_id` INT UNSIGNED NOT NULL,
   `name` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(125) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_user_profile_idx` (`user_profile_id` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   CONSTRAINT `fk_user_user_profile`
     FOREIGN KEY (`user_profile_id`)
     REFERENCES `mydb`.`user_profile` (`id`)
@@ -54,8 +55,8 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`category` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`category` (
-  `id` INT UNSIGNED NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -68,8 +69,8 @@ DROP TABLE IF EXISTS `mydb`.`product` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `price` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `price` DECIMAL(15,2) NOT NULL,
   `description` TEXT NOT NULL,
   `brand` VARCHAR(125) NOT NULL,
   `quantity` INT UNSIGNED NOT NULL,
@@ -120,6 +121,7 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 insert into `mydb`.`user_profile` (name, description)
 values 	('Consumer', 'Normal user with consumer intentions'),
