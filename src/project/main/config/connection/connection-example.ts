@@ -1,15 +1,21 @@
 import { DataSource } from 'typeorm';
 
-export const MySQLDatasource = new DataSource({
-    type: 'mysql',
-    host: '',
-    port: 0,
-    username: '',
-    password: '',
-    database: '',
-    entities: [__dirname + '/4-infra/models/*.{js,ts}']
-});
-
-MySQLDatasource.initialize()
-    .then(() => console.log('Database connected'))
-    .catch(console.error);
+export const connectionExample = async (): Promise<DataSource> => {
+    try {
+        const datasource =  new DataSource({
+            type: 'mysql',
+            host: '',
+            port: 0,
+            username: '',
+            password: '',
+            database: '',
+            entities: [__dirname + '/4-infra/models/*.{js,ts}']
+        })
+    
+        await datasource.initialize();
+        console.log('database connection initalized');
+        return datasource;
+    } catch(error) {
+        console.log('error connection to database: ' + JSON.stringify(error));
+    }
+};

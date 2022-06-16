@@ -1,16 +1,21 @@
+import { DataSource } from "typeorm";
 import { EnvironmentsEnum } from "../../../../shared/enums";
+import { devConnection } from "./connection-development";
+import { homologationConnection } from "./connection-homologation";
+import { productionConnection } from "./connection-production";
 
-export const connect = async () => {
+import 'dotenv/config';
+
+export const connect = async (): Promise<DataSource> => {
     switch(process.env.environment) {
         case EnvironmentsEnum.DEVELOPMENT:
-            await import('./connection-development');
-            break;
+            return await devConnection();
         case EnvironmentsEnum.HOMOLOGATION:
-            await import('./connection-homologation');
-            break;
+            return await homologationConnection();
         case EnvironmentsEnum.PRODUCTION:
-            await import('./connection-production');
+            return await productionConnection();
+        default:
+            console.log('invalid or no value for environemnt was provided at .env');
             break;
-        default: break;
     }
 }

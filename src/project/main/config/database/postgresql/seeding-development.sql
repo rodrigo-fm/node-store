@@ -58,11 +58,9 @@ create table dev.user_reviews_product (
 );
 
 insert into dev.user_profile (name, description)
-values 	('consumer', 'normal user with consumer intentions'),
-		('seller', 'user that sells products');
+values 	('Consumer', 'Normal user with consumer intentions'),
+		('Seller', 'User that sells products');
 	
 insert into dev.category (name, description)
-values  ('eletronics', 'Electronic devices'),
-		('cleaning', 'Products to clean objects or environments');
-
-select * from dev.user_profile up 
+values  ('Electronics', 'Electronic devices'),
+		('Cleaning', 'Products to clean objects or environments');
