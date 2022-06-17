@@ -13,9 +13,11 @@ export const http201Success = (body: any): IHttpResponse => ({
     body: body,
 });
 
-export const http400BadRequest = (body: any): IHttpResponse => ({
+export const http400BadRequest = (message: string): IHttpResponse => ({
     statusCode: 400,
-    body: body,
+    body: {
+        message: message,
+    },
 });
 
 export const http500ServerError = (message: string): IHttpResponse => ({

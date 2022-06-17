@@ -1,6 +1,6 @@
-import { IEmailValidator } from "../../../../shared/validators";
+import { IValidator } from "../../../../shared/validators";
 import EmailValidatorAdapter from "../../../1-presentation/validators/EmailValidatorAdapter";
 
-export const makeEmailValidator = (): IEmailValidator => {
+export const makeEmailValidator = (): IValidator => {
     return new EmailValidatorAdapter();
 }

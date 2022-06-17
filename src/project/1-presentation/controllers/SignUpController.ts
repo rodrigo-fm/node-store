@@ -1,10 +1,12 @@
 import { tryCatchHelper } from "../helpers";
 import { http201Success, http400BadRequest, http500ServerError, IHttpResponse } from '../../../shared/helpers/HttpResponses';
-import { IEmailValidator } from '../../../shared/validators';
+import { IValidator } from '../../../shared/validators';
 import { IAddAccountUseCase } from "../../2-domain/usecases";
 import IController from "./IController";
 
-export interface SignUpRequest {
+interface Request {}
+
+export interface SignUpRequest extends Request {
     name: string;
     email: string;
     password: string;
@@ -14,23 +16,20 @@ export interface SignUpRequest {
 
 export default class SignUpController implements IController {
     constructor(
-        private readonly validator: IEmailValidator,
+        private readonly emailValidator: IValidator,
+        private readonly requiredFieldsValidator: IValidator,
         private readonly addAccountUseCase: IAddAccountUseCase
     ) {}
 
     handle = async (request: SignUpRequest): Promise<IHttpResponse> => {
         return await tryCatchHelper(async (): Promise<IHttpResponse> => {
+            this.requiredFieldsValidator.validate(request);
+            
             if(request.password !== request.confirmPassword) {
-                return http400BadRequest({
-                    message: `The fields "password" and "confirm password" have different values!`,
-                });
+                return http400BadRequest(`The fields "password" and "confirm password" have different values.`);
             }
-            else if(!this.validator.isValid(request.email)) {
-                return http400BadRequest({
-                    message: 'The email provided is invalid',
-                });
-            }
-
+            this.emailValidator.validate(request.email);
+            
             const result: boolean | string = await this.addAccountUseCase.handle({...request});
 
             if(typeof result === 'string') {
