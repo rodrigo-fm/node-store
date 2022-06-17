@@ -24,17 +24,14 @@ export default class SignUpController implements IController {
     handle = async (request: SignUpRequest): Promise<IHttpResponse> => {
         return await tryCatchHelper(async (): Promise<IHttpResponse> => {
             this.requiredFieldsValidator.validate(request);
-            
+
             if(request.password !== request.confirmPassword) {
                 return http400BadRequest(`The fields "password" and "confirm password" have different values.`);
             }
+            
             this.emailValidator.validate(request.email);
             
-            const result: boolean | string = await this.addAccountUseCase.handle({...request});
-
-            if(typeof result === 'string') {
-                return http500ServerError(result);
-            }
+            await this.addAccountUseCase.handle({...request});
 
             return http201Success({
                 message: 'New account created succesfully',

@@ -1,3 +1,4 @@
+import { DatabaseException, InvalidParamException } from "../../../shared/exceptions";
 import { IAddAccountUseCase, AddAccountArgs } from "../../2-domain/usecases";
 import { IAccountRepository } from "../dependencies/IAccountRepository";
 import IEncrypter from "../dependencies/IEncrypter";
@@ -9,12 +10,12 @@ export class AddAccountUseCase implements IAddAccountUseCase {
         private readonly encrypter: IEncrypter,
     ) {}
 
-    handle = async (account: AddAccountArgs): Promise<boolean | string> => {
+    handle = async (account: AddAccountArgs): Promise<boolean> => {
         // check if email exists
         const existingAccount = await this.repository.findByEmail(account.email);
 
         if(existingAccount !== null) {
-            return 'An account with that email already exists';
+            throw new InvalidParamException('An account with that email already exists');
         }
 
         // hash password
@@ -24,7 +25,7 @@ export class AddAccountUseCase implements IAddAccountUseCase {
         const succesfulAccountCreation: boolean = await this.repository.create({...account, password: hashedPassword});
 
         if(!succesfulAccountCreation) {
-            return 'Error creating a new account';
+            throw new DatabaseException('Error creating a new account');
         }
 
         return succesfulAccountCreation;

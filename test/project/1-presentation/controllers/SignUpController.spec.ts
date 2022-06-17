@@ -76,14 +76,15 @@ describe('SignUpController', () => {
     test('Should return 500 and an error message if the account creation fails', async () => {
         // arrange
         const { sut, usecase } = makeSut();
-        const errorMessage: string = 'error message';
-        jest.spyOn(usecase, 'handle').mockReturnValueOnce(Promise.resolve(errorMessage));
+        jest.spyOn(usecase, 'handle').mockImplementationOnce(() => {
+            throw new InvalidParamException('The email provided is already registered on the database');
+        });
 
         // act
         const result = await sut.handle({ ...validRequest });
 
         // assert
-        expect(result).toEqual(http500ServerError(errorMessage))
+        expect(result).toEqual(http400BadRequest('The email provided is already registered on the database'))
     });
 
     test('Should return 201 and a success message when a valid request body is received', async () => {
