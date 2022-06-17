@@ -127,6 +127,18 @@ insert into `mydb`.`user_profile` (name, description)
 values 	('Consumer', 'Normal user with consumer intentions'),
 		    ('Seller', 'User that sells products');
 	
+-- default password: 'password'
+insert into `mydb`.`user` (user_profile_id, name, email, password)
+values  ('1', 'consumer', 'consumer@email.com', '$2a$12$afAWO7p.FxdMMhFoSdMOU.xXV0/N429PVa9Lmlui5JMeJJjLevra6'),
+		    ('2', 'seller', 'seller@email.com', '$2a$12$afAWO7p.FxdMMhFoSdMOU.xXV0/N429PVa9Lmlui5JMeJJjLevra6');
+
 insert into `mydb`.`category` (name, description)
 values  ('Electronics', 'Electronic devices'),
 		    ('Cleaning', 'Products to clean objects or environments');
+
+insert into `mydb`.`product` (name, price, description, brand, quantity, seller_id, category_id)
+values  ('Cellphone', 599.45, 'a normal cellphone', 'Amazing Phone', 10, 2, 1),
+        ('Television', 799.99, 'an amazing television!', 'Zony', 4, 2, 1),
+        ('Soap', 9.99, 'it cleans everything!', 'All clear', 21, 2, 2),
+        ('Shampoo', 8.99, 'clean hair', 'All clear', 30, 2, 2),
+        ('Detergent', 4.99, 'clean all your plates!', 'Clear boss', 8, 2, 2);
