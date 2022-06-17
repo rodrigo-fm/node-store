@@ -16,7 +16,7 @@ describe('AddAccountUseCase', () => {
         jest.spyOn(repository, 'findByEmail').mockReturnValueOnce(Promise.resolve(mockedReturn));
     }
 
-    test('Should return false if email already exists on the database' , async () => {
+    test('Should return an error message if email already exists on the database' , async () => {
         // arrange
         const { repository, sut } = makeSut();
         mockRepositoryFindByEmail(repository,{
@@ -25,22 +25,23 @@ describe('AddAccountUseCase', () => {
         });
 
         // act
-        const result: boolean = await sut.handle({...validArgs});
+        const result: boolean | string = await sut.handle({...validArgs});
 
         // assert
-        expect(result).toBe(false);
+        expect(result).toBe("An account with that email already exists");
     });
 
-    test('Should return false if account creation fails' , async () => {
+    test('Should return an error message if account creation fails' , async () => {
         // arrange
         const { repository, sut } = makeSut();
+        jest.spyOn(repository, 'findByEmail').mockReturnValueOnce(Promise.resolve(null));
         jest.spyOn(repository, 'create').mockReturnValueOnce(Promise.resolve(false));
 
         // act
-        const result: boolean = await sut.handle({...validArgs});
+        const result: boolean | string = await sut.handle({...validArgs});
 
         // assert
-        expect(result).toBe(false);
+        expect(result).toBe('Error creating a new account');
     });
 
     test('Should return true if account creation succeeds' , async () => {
@@ -49,7 +50,7 @@ describe('AddAccountUseCase', () => {
         mockRepositoryFindByEmail(repository,null);
 
         // act
-        const result: boolean = await sut.handle({...validArgs});
+        const result: boolean | string = await sut.handle({...validArgs});
 
         // assert
         expect(result).toBe(true);

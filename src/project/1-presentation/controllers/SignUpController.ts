@@ -31,10 +31,10 @@ export default class SignUpController implements IController {
                 });
             }
 
-            const success = await this.addAccountUseCase.handle({...request});
+            const result: boolean | string = await this.addAccountUseCase.handle({...request});
 
-            if(!success) {
-                return http500ServerError('Error creating account');
+            if(typeof result === 'string') {
+                return http500ServerError(result);
             }
 
             return http201Success({

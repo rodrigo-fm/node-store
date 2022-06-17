@@ -61,13 +61,14 @@ describe('SignUpController', () => {
     test('Should return 500 and an error message if the account creation fails', async () => {
         // arrange
         const { sut, usecase } = makeSut();
-        jest.spyOn(usecase, 'handle').mockReturnValueOnce(Promise.resolve(false));
+        const errorMessage: string = 'error message';
+        jest.spyOn(usecase, 'handle').mockReturnValueOnce(Promise.resolve(errorMessage));
 
         // act
         const result = await sut.handle({ ...validRequest });
 
         // assert
-        expect(result).toEqual(http500ServerError('Error creating account'))
+        expect(result).toEqual(http500ServerError(errorMessage))
     });
 
     test('Should return 201 and a success message when a valid request body is received', async () => {
