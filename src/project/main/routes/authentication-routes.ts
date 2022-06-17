@@ -1,8 +1,7 @@
-import { Router, Request, Response } from 'express';
-import { DataSource } from 'typeorm';
+import { Router } from 'express';
 import { adaptRoute } from '../adapters/express-route-adapter';
 import { makeSignUpController } from '../factories/controllers/signup-controller-factory';
 
-export default (router: Router, datasource: DataSource): void => {
-    router.post('/signup', adaptRoute(makeSignUpController(datasource)));
+export default (router: Router): void => {
+    router.post('/signup', adaptRoute(makeSignUpController()));
 }

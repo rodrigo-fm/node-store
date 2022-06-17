@@ -1,7 +1,6 @@
 import { tryCatchHelper } from "../helpers";
-import { http201Success, http400BadRequest, IHttpResponse } from '../../../shared/helpers/HttpResponses';
-import { IValidator } from '../../../shared/validators';
-import { IAddAccountUseCase, ISearchProductsUseCase } from "../../2-domain/usecases";
+import { http200Success, IHttpResponse } from '../../../shared/helpers/HttpResponses';
+import { ISearchProductsUseCase } from "../../2-domain/usecases";
 import IController from "./IController";
 import IHttpRequest from "../interfaces/IRequest";
 import ProductEntity from "../../2-domain/entities/ProductEntity";
@@ -23,7 +22,9 @@ export default class SearchProductsController implements IController {
         return await tryCatchHelper(async (): Promise<IHttpResponse> => {
             const result: ProductEntity[] = await this.searchProductsUseCase.handle({...request});
             
-            return http201Success(result);
+            return http200Success({
+                products: result
+            });
         });
     }
 }

@@ -4,9 +4,9 @@ import { AddAccountUseCase } from "../../../3-data/usecases/AddAccountUseCase"
 import { makeBCryptAdapter } from "../adapters"
 import { makeAccountRepository } from "../repositories"
 
-export const makeAddAccountUseCase = (datasource: DataSource): IAddAccountUseCase => {
+export const makeAddAccountUseCase = (): IAddAccountUseCase => {
     return new AddAccountUseCase(
-        makeAccountRepository(datasource),
+        makeAccountRepository(),
         makeBCryptAdapter(),
     );
 }
