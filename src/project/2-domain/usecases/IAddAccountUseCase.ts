@@ -6,5 +6,5 @@ export interface AddAccountArgs {
 }
 
 export interface IAddAccountUseCase {
-    handle(account: AddAccountArgs): Promise<boolean>;
+    handle(account: AddAccountArgs): Promise<boolean | string>;
 }

@@ -1,10 +1,12 @@
 import SignUpController from "../../../../src/project/1-presentation/controllers/SignUpController";
+import IHttpRequest from "../../../../src/project/1-presentation/interfaces/IRequest";
 import { AddAccountArgs, IAddAccountUseCase } from "../../../../src/project/2-domain/usecases";
-import { IEmailValidator } from "../../../../src/shared/validators";
+import { IValidator } from "../../../../src/shared/validators";
 
 type SutType = {
     sut: SignUpController;
-    validator: IEmailValidator;
+    emailValidator: IValidator;
+    requiredFieldsValidator: IValidator;
     usecase: IAddAccountUseCase;
 };
 
@@ -18,20 +20,40 @@ export const makeUseCaseSut = (): IAddAccountUseCase => {
     return new AddAccountUseCaseSut();
 }
 
-export const makeValidatorSut = (): IEmailValidator => {
-    class EmailValidatorSut implements IEmailValidator {
-        isValid = (email: string): boolean => true;
+export const makeEmailValidatorSut = (): IValidator => {
+    class EmailValidatorSut implements IValidator {
+        validate = (email: string): void => {
+            return;
+        }
     }
     return new EmailValidatorSut();
 }
 
+export const makeRequiredFieldsSut = (): IValidator => {
+    const requiredFields: string[] = [];
+
+    class RequiredFieldsValidator implements IValidator {
+
+        constructor(
+            private readonly requiredFields: string[]
+        ) {}
+
+        validate = (request: IHttpRequest): void => {
+            return;
+        }
+    }
+    return new RequiredFieldsValidator(requiredFields);
+}
+
 export const makeSut = (): SutType => {
-    const validator = makeValidatorSut();
+    const emailValidator = makeEmailValidatorSut();
+    const requiredFieldsValidator = makeRequiredFieldsSut();
     const usecase = makeUseCaseSut();
 
     return {
-        sut: new SignUpController(validator, usecase),
-        validator: validator,
+        sut: new SignUpController(emailValidator, requiredFieldsValidator, usecase),
+        emailValidator: emailValidator,
+        requiredFieldsValidator: requiredFieldsValidator,
         usecase: usecase,
     };
 }
