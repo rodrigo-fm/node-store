@@ -11,8 +11,11 @@ export namespace IAddAccountRepository {
 
 export namespace IFindByEmailRepository {
     export type Return = {
+        id: number;
+        userProfileId: number;
         name: string;
         email: string;
+        password: string;
     };
 }
 

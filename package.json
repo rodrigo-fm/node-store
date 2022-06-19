@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npx ts-node src/project/main/server.ts",
     "dev": "npx ts-node-dev --inspect --respawn --transpile-only --ignore-watch node_modules src/project/main/server.ts",
-    "test": "npx jest"
+    "test": "npx jest -i"
   },
   "author": "",
   "license": "ISC",
