@@ -10,10 +10,19 @@ export default class ProductMySQLRepository implements IProductRepository {
     ) {}
 
     async getProducts(account: IGetProductsRepository.Args): Promise<IGetProductsRepository.Return> {
-        // TODO: implement filters
-        return await this.datasource.query(`
+        const result: any[] = await this.datasource.query(`
             SELECT * FROM product
         `);
+        
+        return result.map((product) => {
+            return {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                description: product.description,
+                quantity: product.quantity
+            };
+        });
     }
 
     async showProduct(id: number): Promise<ProductEntity> {
@@ -27,6 +36,14 @@ export default class ProductMySQLRepository implements IProductRepository {
             throw new DatabaseException('Error finding the product');
         }
 
-        return result[0];
+        const product = result[0];
+
+        return {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            description: product.description,
+            quantity: product.quantity
+        };
     }
 }
