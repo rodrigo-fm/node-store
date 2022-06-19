@@ -3,10 +3,9 @@ import { http201Success, http400BadRequest, http500ServerError, IHttpResponse } 
 import { IValidator } from '../../../shared/validators';
 import { IAddAccountUseCase } from "../../2-domain/usecases";
 import IController from "./IController";
+import IHttpRequest from "../interfaces/IRequest";
 
-interface Request {}
-
-export interface SignUpRequest extends Request {
+export interface SignUpRequest extends IHttpRequest {
     name: string;
     email: string;
     password: string;

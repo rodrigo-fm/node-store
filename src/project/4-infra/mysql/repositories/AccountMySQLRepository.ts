@@ -8,13 +8,10 @@ export default class AccountMySQLRepository implements IAccountRepository {
     ) {}
 
     async create(account: IAddAccountRepository.Args): Promise<boolean> {
-        const result = await this.datasource.query(`
+        await this.datasource.query(`
             INSERT INTO user (email, name, password, user_profile_id)
             VALUES ('${account.email}', '${account.name}', '${account.password}', ${account.userProfileId});
         `);
-
-        // if result is not what was expected, throw a datasource error
-        // throw new DataSourceException('message here');
 
         return true;
     }

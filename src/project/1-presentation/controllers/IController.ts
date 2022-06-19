@@ -1,3 +1,5 @@
+import IHttpRequest from "../interfaces/IRequest";
+
 export default interface IController {
-    handle: (request: any) => Promise<any>
+    handle: (request: IHttpRequest) => Promise<any>
 }
