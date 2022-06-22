@@ -9,6 +9,10 @@ export default class TokenGeneratorAdapter implements ITokenGenerator {
         private readonly secret: string,
     ) {}
 
+    async decrypt(token: string): Promise<any> {
+        return Promise.resolve(jwt.decode(token));
+    }
+
     async generate(content: any): Promise<string> {
         return jwt.sign(content, this.secret, {
             expiresIn: `${AuthenticationTokenEnum.DURATION} days`
