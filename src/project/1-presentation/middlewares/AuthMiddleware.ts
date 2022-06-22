@@ -4,7 +4,7 @@ import ILoadUserByTokenUseCase from "../../2-domain/usecases/ILoadUserByToken";
 import { tryCatchHelper } from "../helpers";
 import { IHttpRequest, IMiddleware } from "../interfaces";
 
-export interface IAuthMiddlewareArgs extends IHttpRequest {
+export interface AuthMiddlewareArgs extends IHttpRequest {
     authorization?: string
 }
 
@@ -14,7 +14,7 @@ export default class AuthMiddleware implements IMiddleware {
         private readonly loadUserByToken: ILoadUserByTokenUseCase,
     ) {}
 
-    handle = async (httpRequest: IAuthMiddlewareArgs): Promise<IHttpResponse> => {
+    handle = async (httpRequest: AuthMiddlewareArgs): Promise<IHttpResponse> => {
         return tryCatchHelper(async () => {
             const { authorization } = httpRequest;
             if(authorization !== undefined) {
