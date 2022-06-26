@@ -1,5 +1,5 @@
 import { tryCatchHelper } from "../helpers";
-import { http201Success, http400BadRequest, http500ServerError, IHttpResponse } from '../../../shared/helpers/HttpResponses';
+import { http201Success, http400BadRequest, IHttpResponse } from '../../../shared/helpers/HttpResponses';
 import { IValidator } from '../../../shared/validators';
 import { IAddAccountUseCase } from "../../2-domain/usecases";
 import IController from "./IController";

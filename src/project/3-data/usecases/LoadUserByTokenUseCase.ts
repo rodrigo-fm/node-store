@@ -1,3 +1,4 @@
+import { InvalidParamException } from "../../../shared/exceptions";
 import { UserEntity } from "../../2-domain/entities";
 import ILoadUserByTokenUseCase from "../../2-domain/usecases/ILoadUserByToken";
 import { IAccountRepository } from "../dependencies/IAccountRepository";
@@ -12,7 +13,9 @@ export default class LoadUserByTokenUseCase implements ILoadUserByTokenUseCase {
 
     handle = async (token: string): Promise<UserEntity> => {
         // get user info from token with tokenGenerator
-        const tokenUser: UserEntity = await this.tokenGenerator.decrypt(token);
+        const tokenUser = await this.tokenGenerator.decrypt(token);
+
+        if(tokenUser === null) throw new InvalidParamException('Invalid token provided');
 
         // check if email exists on the database
         const validUser = await this.accountRepository.findByEmail(tokenUser.email);
@@ -21,6 +24,14 @@ export default class LoadUserByTokenUseCase implements ILoadUserByTokenUseCase {
             throw new Error('Valid user not found');
         }
 
-        return tokenUser;
+        tokenUser.exp = tokenUser.exp.toString();
+        while(tokenUser.exp.length < 13) tokenUser.exp += "0";
+
+        return {
+            ...tokenUser,
+            token: {
+                expiryDate: new Date(parseInt(tokenUser.exp))
+            }
+        };
     }
 }
