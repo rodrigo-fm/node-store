@@ -9,7 +9,7 @@ export default class ProductMySQLRepository implements IProductRepository {
         private readonly datasource: DataSource,
     ) {}
 
-    async getProducts(filters: IGetProductsRepository.Args): Promise<IGetProductsRepository.Return> {
+    async getProducts(filters: IGetProductsRepository.Args): Promise<ProductEntity[]> {
         const result: any[] = await this.datasource.query(`
             SELECT * FROM product
         `);
@@ -18,7 +18,7 @@ export default class ProductMySQLRepository implements IProductRepository {
             return {
                 id: product.id,
                 name: product.name,
-                price: product.price,
+                price: typeof product.price === 'string' ? parseFloat(product.price) : product.price,
                 description: product.description,
                 quantity: product.quantity
             };

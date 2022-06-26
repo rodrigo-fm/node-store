@@ -8,8 +8,6 @@ export namespace IGetProductsRepository {
         minPrice?: number;
         maxPrice?: number;
     };
-
-    export type Return = ProductEntity[];
 }
 
 export namespace IShowProductRepository {
@@ -38,7 +36,7 @@ export namespace IStoreProduct {
 }
 
 export interface IProductRepository {
-    getProducts(filters: IGetProductsRepository.Args): Promise<IGetProductsRepository.Return>;
+    getProducts(filters: IGetProductsRepository.Args): Promise<ProductEntity[]>;
     showProduct(id: number): Promise<IShowProductRepository.Return>;
     storeProductReview(review: IStoreProductReview.Args): Promise<void>;
     storeProduct(product: IStoreProduct.Args): Promise<void>;
