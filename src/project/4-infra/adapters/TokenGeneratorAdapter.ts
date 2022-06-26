@@ -10,7 +10,7 @@ export default class TokenGeneratorAdapter implements ITokenGenerator {
     ) {}
 
     async decrypt(token: string): Promise<any> {
-        return Promise.resolve(jwt.decode(token));
+        return Promise.resolve(jwt.verify(token, this.secret));
     }
 
     async generate(content: any): Promise<string> {

@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-
 import { IHttpRequest, IMiddleware } from "../../1-presentation/interfaces";
 
 type ExpressFunction = (req: Request, res: Response, next: NextFunction) => Promise<void>;
@@ -7,7 +6,7 @@ type ExpressFunction = (req: Request, res: Response, next: NextFunction) => Prom
 export const adaptMiddleware = (middleware: IMiddleware): ExpressFunction => {
     return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const request: IHttpRequest = {
-            ...req.headers
+            ...(req.headers || {})
         };
 
         const response = await middleware.handle(request);
