@@ -19,7 +19,7 @@ export default class AuthMiddleware implements IMiddleware {
             const { authorization } = httpRequest;
             if(authorization !== undefined) {
                 const user: UserEntity = await this.loadUserByToken.handle(authorization);
-                if(user.token !== undefined && user.token.expiryDate) {
+                if(user.token !== undefined && user.token.expiryDate > new Date()) {
                     return http200Success({});
                 }
             }
