@@ -3,6 +3,7 @@
 ## Tools used
 * [Star UML](https://staruml.io/) to create UML diagrams.
 * [MySQL Workbench](https://www.mysql.com/products/workbench/) to model the relational database schema.
+* [NPM](https://www.npmjs.com/) to manage node's packages.
 
 ## Use case diagram
 
