@@ -1,12 +1,12 @@
 import { DataSource } from 'typeorm';
 import { connect } from './config/connection/connection';
-import DatabaseInfo from './config/database/database-info';
+import DatabaseInfoSingleton from './singletons/database-info-singleton';
 
 const port = 3000;
 
 connect().then(async (datasource: DataSource) => {
 
-    const database = DatabaseInfo.getInstance();
+    const database = DatabaseInfoSingleton.getInstance();
     database.datasource = datasource;
 
     const { setUpApp } = await import('./config/app');
