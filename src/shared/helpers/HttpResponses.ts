@@ -20,6 +20,13 @@ export const http400BadRequest = (message: string): IHttpResponse => ({
     },
 });
 
+export const http403Forbidden = (message: string): IHttpResponse => ({
+    statusCode: 403,
+    body: {
+        message: message,
+    },
+});
+
 export const http500ServerError = (message: string): IHttpResponse => ({
     statusCode: 500,
     body: {

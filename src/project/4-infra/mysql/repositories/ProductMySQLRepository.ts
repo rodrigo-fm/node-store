@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import { DatabaseException } from "../../../../shared/exceptions";
 import ProductEntity from "../../../2-domain/entities/ProductEntity";
-import { IGetProductsRepository, IProductRepository } from "../../../3-data/dependencies/IProductRepository";
+import { IGetProductsRepository, IProductRepository, IStoreProductReview } from "../../../3-data/dependencies/IProductRepository";
 
 export default class ProductMySQLRepository implements IProductRepository {
 
@@ -45,5 +45,12 @@ export default class ProductMySQLRepository implements IProductRepository {
             description: product.description,
             quantity: product.quantity
         };
+    }
+
+    async storeProductReview(review: IStoreProductReview.Args): Promise<void> {
+        await this.datasource.query(`
+            INSERT INTO user_reviews_product(user_id, product_id, score, review)
+            VALUES(${review.userId}, ${review.productId}, ${review.score}, '${review.review}');
+        `);
     }
 }

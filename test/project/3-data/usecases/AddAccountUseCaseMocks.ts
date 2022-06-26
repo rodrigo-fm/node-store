@@ -16,6 +16,8 @@ export const makeRepositorySut = (): IAccountRepository => {
 
         findByEmail(email: string): Promise<IFindByEmailRepository.Return | null> {
             return Promise.resolve({
+                id: 1,
+                userProfileId: 1,
                 email: 'email@email.com',
                 name: 'username',
                 password: 'password',
