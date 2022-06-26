@@ -20,7 +20,6 @@ export default class SellerMiddleware implements IMiddleware {
             const { authorization } = httpRequest;
             if(authorization !== undefined) {
                 const user: UserEntity = await this.loadUserByToken.handle(authorization);
-                console.log("seller middleware: " + JSON.stringify(user));
                 if(user.userProfileId === UserProfileEnum.SELLER && user.token !== undefined && user.token.expiryDate > new Date()) {
                     return http200Success({});
                 }

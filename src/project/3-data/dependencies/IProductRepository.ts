@@ -25,8 +25,21 @@ export namespace IStoreProductReview {
     };
 }
 
+export namespace IStoreProduct {
+    export type Args = {
+        name: string;
+        price: number;
+        description: string;
+        brand: string;
+        quantity: number;
+        sellerId: number;
+        categoryId: number;
+    };
+}
+
 export interface IProductRepository {
-    getProducts(account: IGetProductsRepository.Args): Promise<IGetProductsRepository.Return>;
+    getProducts(filters: IGetProductsRepository.Args): Promise<IGetProductsRepository.Return>;
     showProduct(id: number): Promise<IShowProductRepository.Return>;
     storeProductReview(review: IStoreProductReview.Args): Promise<void>;
+    storeProduct(product: IStoreProduct.Args): Promise<void>;
 }
