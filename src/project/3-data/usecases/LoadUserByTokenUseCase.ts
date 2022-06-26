@@ -29,6 +29,7 @@ export default class LoadUserByTokenUseCase implements ILoadUserByTokenUseCase {
 
         return {
             ...tokenUser,
+            userProfileId: tokenUser.user_profile_id,
             token: {
                 expiryDate: new Date(parseInt(tokenUser.exp))
             }
