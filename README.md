@@ -39,7 +39,15 @@ Execute the following commands inside the this project's directory (do not confu
 
 Build the image: ``docker build -t node-store:latest --build-arg DEFAULT_PORT=3000 .``
 
-Run the container: ``docker run -d --name node-store-container --env environment=development jwtSecret=djsao2oi32f -p 3000:3000 node-store:latest``
+### Development specific commands
+
+Run the container: ``docker run -d --name node-store-dev --env environment=development jwtSecret=djsao2oi32f -p 3000:3000 -v $(pwd):/node-store node-store:latest``
+
+P.S: **If you are using windows** change the ``-v $(pwd):/node-store`` for ``-v "%cd%":/node-store``
+
+### Production/Homologation specific commands
+
+Run the container: ``docker run -d --name node-store --env environment=production jwtSecret=djsao2oi32f -p 3000:3000 node-store:latest``
 
 ### Values for the environment variables
 **environment:** can be "developemnt", "homologation" or "production".

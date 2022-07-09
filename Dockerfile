@@ -1,4 +1,10 @@
-FROM node:lts
+# Remember: the order of the commands can impact the image build performance
+# if the ARG instruction, for instance, were declared before WORKDIR
+# everything below it would re-run when the option --build-arg DEFAULT_PORT=[value] were added to the docker build command,
+# since it changes the value of the DEFAULT_PORT arg.
+
+# The tip now might be: keep the most dynamic commands at the bottom and the most static ones at the top
+FROM node:16
 
 WORKDIR /node-store
 
