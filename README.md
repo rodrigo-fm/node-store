@@ -37,7 +37,7 @@ The release/ branch should have it's version as a name, e.g: release/v0.1
 
 Execute the following commands inside the this project's directory (do not confuse with the /src/project folder!).
 
-Build the image: ``docker build -t node-store:latest .``
+Build the image: ``docker build -t node-store:latest --build-arg DEFAULT_PORT=3000 .``
 
 Run the container: ``docker run -d --name node-store-container --env environment=development jwtSecret=djsao2oi32f -p 3000:3000 node-store:latest``
 
