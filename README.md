@@ -33,4 +33,15 @@ The release/ branch should have it's version as a name, e.g: release/v0.1
 ![Relational Database tables](docs/database-tables/tables-modeling.png)
 
 ## How to run the docker image
-TODO: add the tutorial here
+(This section is not complete, the docker commands are not gonna work yet).
+
+Execute the following commands inside the this project's directory (do not confuse with the /src/project folder!).
+
+Build the image: ``docker build -t node-store:latest .``
+
+Run the container: ``docker run -d --name node-store-container --env environment=development jwtSecret=djsao2oi32f -p 3000:3000 node-store:latest``
+
+### Values for the environment variables
+**environment:** can be "developemnt", "homologation" or "production".
+
+**jwtSecret:** any random string value.
