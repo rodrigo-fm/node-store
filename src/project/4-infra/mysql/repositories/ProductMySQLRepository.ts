@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import { DatabaseException } from "../../../../shared/exceptions";
 import ProductEntity from "../../../2-domain/entities/ProductEntity";
-import { IGetProductsRepository, IProductRepository, IStoreProductReview } from "../../../3-data/dependencies/IProductRepository";
+import { IGetProductsRepository, IProductRepository, IStoreProduct, IStoreProductReview } from "../../../3-data/dependencies/IProductRepository";
 
 export default class ProductMySQLRepository implements IProductRepository {
 
@@ -9,7 +9,7 @@ export default class ProductMySQLRepository implements IProductRepository {
         private readonly datasource: DataSource,
     ) {}
 
-    async getProducts(account: IGetProductsRepository.Args): Promise<IGetProductsRepository.Return> {
+    async getProducts(filters: IGetProductsRepository.Args): Promise<ProductEntity[]> {
         const result: any[] = await this.datasource.query(`
             SELECT * FROM product
         `);
@@ -18,7 +18,7 @@ export default class ProductMySQLRepository implements IProductRepository {
             return {
                 id: product.id,
                 name: product.name,
-                price: product.price,
+                price: typeof product.price === 'string' ? parseFloat(product.price) : product.price,
                 description: product.description,
                 quantity: product.quantity
             };
@@ -51,6 +51,21 @@ export default class ProductMySQLRepository implements IProductRepository {
         await this.datasource.query(`
             INSERT INTO user_reviews_product(user_id, product_id, score, review)
             VALUES(${review.userId}, ${review.productId}, ${review.score}, '${review.review}');
+        `);
+    }
+
+    async storeProduct(product: IStoreProduct.Args): Promise<void> {
+        await this.datasource.query(`
+            INSERT INTO product(name, price, description, brand, quantity, seller_id, category_id)
+            VALUES(
+                '${product.name}',
+                ${product.price},
+                '${product.description}',
+                '${product.brand}',
+                ${product.quantity},
+                ${product.sellerId},
+                ${product.categoryId}
+            );
         `);
     }
 }
