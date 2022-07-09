@@ -31,3 +31,6 @@ The release/ branch should have it's version as a name, e.g: release/v0.1
 
 ## Relational Database tables
 ![Relational Database tables](docs/database-tables/tables-modeling.png)
+
+## How to run the docker image
+TODO: add the tutorial here
