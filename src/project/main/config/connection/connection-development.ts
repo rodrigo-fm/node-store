@@ -4,8 +4,8 @@ export const devConnection = async (): Promise<DataSource> => {
     try {
         const datasource =  new DataSource({
             type: 'mysql',
-            host: 'localhost',
-            // host: '172.18.0.2',
+            host: 'mysqldb', // docker container name
+            // host: 'localhost',
             port: 3306,
             username: 'root',
             password: 'root_password_docker',
