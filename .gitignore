@@ -8,6 +8,3 @@ src/project/main/config/connection/connection-production.ts
 
 # env files
 .env
-
-# docker bind mounts folders
-volumes/mysql
