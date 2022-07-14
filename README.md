@@ -32,24 +32,9 @@ The release/ branch should have it's version as a name, e.g: release/v0.1
 ## Relational Database tables
 ![Relational Database tables](docs/database-tables/tables-modeling.png)
 
-## How to run the docker image
-(This section is not complete, the docker commands are not gonna work yet).
-
-Execute the following commands inside the this project's directory (do not confuse with the /src/project folder!).
-
-Build the image: ``docker build -t node-store:latest --build-arg DEFAULT_PORT=3000 .``
-
-### Development specific commands
-
-Run the container: ``docker run -d --name node-store-dev --env environment=development jwtSecret=djsao2oi32f -p 3000:3000 -v $(pwd):/node-store node-store:latest``
-
-P.S: **If you are using windows** change the ``-v $(pwd):/node-store`` for ``-v "%cd%":/node-store``
-
-### Production/Homologation specific commands
-
-Run the container: ``docker run -d --name node-store --env environment=production jwtSecret=djsao2oi32f -p 3000:3000 node-store:latest``
-
-### Values for the environment variables
-**environment:** can be "developemnt", "homologation" or "production".
-
-**jwtSecret:** any random string value.
+## How to run the docker image using docker compose
+1. Create the .env file.
+   1. Give the variable "jwtSecret" any random string value you want.
+   2. Do not change the "development" variable value!
+2. Create the directory volumes/mysql inside the project's folder.
+   
