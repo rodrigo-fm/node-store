@@ -11,15 +11,15 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `node_store_db` DEFAULT CHARACTER SET utf8 ;
+USE `node_store_db` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`user_profile`
+-- Table `node_store_db`.`user_profile`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`user_profile` ;
+DROP TABLE IF EXISTS `node_store_db`.`user_profile` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`user_profile` (
+CREATE TABLE IF NOT EXISTS `node_store_db`.`user_profile` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
@@ -28,11 +28,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`user`
+-- Table `node_store_db`.`user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`user` ;
+DROP TABLE IF EXISTS `node_store_db`.`user` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`user` (
+CREATE TABLE IF NOT EXISTS `node_store_db`.`user` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_profile_id` INT UNSIGNED NOT NULL,
   `name` VARCHAR(255) NOT NULL,
@@ -43,18 +43,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user` (
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   CONSTRAINT `fk_user_user_profile`
     FOREIGN KEY (`user_profile_id`)
-    REFERENCES `mydb`.`user_profile` (`id`)
+    REFERENCES `node_store_db`.`user_profile` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`category`
+-- Table `node_store_db`.`category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`category` ;
+DROP TABLE IF EXISTS `node_store_db`.`category` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`category` (
+CREATE TABLE IF NOT EXISTS `node_store_db`.`category` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
@@ -63,11 +63,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`product`
+-- Table `node_store_db`.`product`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`product` ;
+DROP TABLE IF EXISTS `node_store_db`.`product` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`product` (
+CREATE TABLE IF NOT EXISTS `node_store_db`.`product` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `price` DECIMAL(15,2) NOT NULL,
@@ -81,23 +81,23 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   INDEX `fk_product_category1_idx` (`category_id` ASC) VISIBLE,
   CONSTRAINT `fk_product_user1`
     FOREIGN KEY (`seller_id`)
-    REFERENCES `mydb`.`user` (`id`)
+    REFERENCES `node_store_db`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_product_category1`
     FOREIGN KEY (`category_id`)
-    REFERENCES `mydb`.`category` (`id`)
+    REFERENCES `node_store_db`.`category` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`user_reviews_product`
+-- Table `node_store_db`.`user_reviews_product`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`user_reviews_product` ;
+DROP TABLE IF EXISTS `node_store_db`.`user_reviews_product` ;
 
-CREATE TABLE IF NOT EXISTS `mydb`.`user_reviews_product` (
+CREATE TABLE IF NOT EXISTS `node_store_db`.`user_reviews_product` (
   `user_id` INT UNSIGNED NOT NULL,
   `product_id` INT UNSIGNED NOT NULL,
   `score` TINYINT UNSIGNED NOT NULL,
@@ -107,12 +107,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user_reviews_product` (
   INDEX `fk_user_has_product_user1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_user_has_product_user1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `mydb`.`user` (`id`)
+    REFERENCES `node_store_db`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_has_product_product1`
     FOREIGN KEY (`product_id`)
-    REFERENCES `mydb`.`product` (`id`)
+    REFERENCES `node_store_db`.`product` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -123,20 +123,20 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-insert into `mydb`.`user_profile` (name, description)
+insert into `node_store_db`.`user_profile` (name, description)
 values 	('Consumer', 'Normal user with consumer intentions'),
 		    ('Seller', 'User that sells products');
 	
 -- default password: 'password'
-insert into `mydb`.`user` (user_profile_id, name, email, password)
+insert into `node_store_db`.`user` (user_profile_id, name, email, password)
 values  ('1', 'consumer', 'consumer@email.com', '$2a$12$afAWO7p.FxdMMhFoSdMOU.xXV0/N429PVa9Lmlui5JMeJJjLevra6'),
 		    ('2', 'seller', 'seller@email.com', '$2a$12$afAWO7p.FxdMMhFoSdMOU.xXV0/N429PVa9Lmlui5JMeJJjLevra6');
 
-insert into `mydb`.`category` (name, description)
+insert into `node_store_db`.`category` (name, description)
 values  ('Electronics', 'Electronic devices'),
 		    ('Cleaning', 'Products to clean objects or environments');
 
-insert into `mydb`.`product` (name, price, description, brand, quantity, seller_id, category_id)
+insert into `node_store_db`.`product` (name, price, description, brand, quantity, seller_id, category_id)
 values  ('Cellphone', 599.45, 'a normal cellphone', 'Amazing Phone', 10, 2, 1),
         ('Television', 799.99, 'an amazing television!', 'Zony', 4, 2, 1),
         ('Soap', 9.99, 'it cleans everything!', 'All clear', 21, 2, 2),

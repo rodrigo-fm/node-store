@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  # --rm and -d flags are composer's default
+  # composer also automatically generates the containers' network
+  mysqldb:
+    image: 'mysql:8.0.29'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password_docker
+      - MYSQL_DATABASE=node_store_db
+    ports:
+      - '3336:3306'
+    volumes:
+      - mysqldata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$root_password_docker"]
+      interval: 5s
+      timeout: 20s
+      retries: 4
+      start_period: 10s
+
+  node-store:
+    build: .
+    ports:
+      - '3000:3000'
+    # env_file: ./.env
+    environment:
+      - environment=development
+      - jwtSecret=t435hj6rtS5465HF
+    command: "npm run start"
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+
+volumes:
+  mysqldata:
