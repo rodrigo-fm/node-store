@@ -31,3 +31,11 @@ The release/ branch should have it's version as a name, e.g: release/v0.1
 
 ## Relational Database tables
 ![Relational Database tables](docs/database-tables/tables-modeling.png)
+
+## How to run the docker image using docker compose
+Inside the project's folder, run the following commands:
+1. Run ``docker-compose up -d``
+2. Connect to the database using the credentials inside src/project/main/config/connection/connection-development.ts
+3. Run the seeding script inside src/project/main/config/database/mysql/seeding-development.sql
+   
+After that, the api will be ready to be tested at localhost:3000

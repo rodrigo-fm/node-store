@@ -1,0 +1,16 @@
+# node specific
+node_modules/
+
+# docker specific
+Dockerfile
+
+# git specific
+.git
+.gitignore
+
+# project specific
+.env
+.env.example
+README.md
+README-PORTUGUES.md
+src/project/main/config/connection/connection-example.ts
